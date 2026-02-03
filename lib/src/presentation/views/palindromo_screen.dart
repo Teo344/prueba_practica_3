@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../viewmodel/palindromo_viewmodel.dart';
+
+import '../../domain/entities/palindromo_entity.dart';
+import '../viewmodels/palindromo_viewmodel.dart';
 
 class PalindromoScreen extends ConsumerStatefulWidget {
   const PalindromoScreen({super.key});
@@ -17,7 +19,7 @@ class _PalindromoScreenState
 
   @override
   Widget build(BuildContext context) {
-    final vm = ref.read(palindromoProvider);
+    final vm = ref.read(palindromoViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Palíndromo')),
@@ -25,20 +27,23 @@ class _PalindromoScreenState
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: ctrl,
-              decoration: const InputDecoration(
-                  labelText: 'Ingrese palabra'),
-            ),
+            TextField(controller: ctrl),
+
             ElevatedButton(
-                onPressed: () {
-                  bool es = vm.evaluar(ctrl.text);
-                  setState(() {
-                    resultado =
-                        es ? 'Es palíndromo' : 'No es palíndromo';
-                  });
-                },
-                child: const Text('Evaluar')),
+              onPressed: () {
+                final entity =
+                    PalindromoEntity(ctrl.text);
+
+                bool es = vm.evaluar(entity);
+
+                setState(() {
+                  resultado =
+                      es ? 'Es palíndromo' : 'No es palíndromo';
+                });
+              },
+              child: const Text('Evaluar'),
+            ),
+
             Text(resultado)
           ],
         ),

@@ -1,6 +1,9 @@
-class PalindromoModel {
-  bool esPalindromo(String palabra) {
-    palabra = palabra.toLowerCase().replaceAll(" ", "");
+import '../entities/palindromo_entity.dart';
+
+class EvaluarPalindromoUseCase {
+  bool execute(PalindromoEntity entity) {
+    String palabra =
+        entity.palabra.toLowerCase().replaceAll(" ", "");
 
     int inicio = 0;
     int fin = palabra.length - 1;
